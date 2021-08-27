@@ -1,6 +1,6 @@
 import time
 import RPi
-
+#https://github.com/szazo/DHT11_Python
 
 class DHT11Result:
     'DHT11 sensor result returned by DHT11.read() method'
