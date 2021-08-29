@@ -1,0 +1,10 @@
+run the following with pigpio
+these steps are required to begin the program
+
+install pigpio with pip3
+
+run : 
+
+    sudo pigpiod #Start daemon
+
+    pigs pud 4 u # Set internal pull up

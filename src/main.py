@@ -3,7 +3,10 @@ from gpio_handler import GpioHandler
 from console_logging import ConsoleLogger
 import websockets
 import asyncio
+from pigpio_dht import DHT11, DHT22
+
 import json
+import dht11
 from config import WeatherMonitorConfig
 
 class Main:
@@ -29,7 +32,7 @@ class Main:
         else:
             self.logger.log_passed_auth()
             t1 = loop.create_task(self.test_send_periodic_data_and_listen(websocket))
-            t2 = loop.create_task(self.monitor_weather(self.config.door_check_interval))
+            t2 = loop.create_task(self.monitor_weather(self.config.weather_check_interval))
             await asyncio.wait([t1,t2])
 
     async def send_connection_credentials(self,websocket):
@@ -41,6 +44,10 @@ class Main:
 
     async def monitor_weather(self, interval):
         handler = GpioHandler(self)
+  
+    
+
+        print("data")
         await handler.start_monitoring_weather(interval)
 
     async def establish_connection(self):
@@ -86,12 +93,11 @@ class Main:
             ConsoleLogger.log_fatal("\nDisconnected by the server!!(by a client)")
 
     def name_and_type(self):
-        data = {"name":self.config.name , "type":"WeatherStation"}
+        data = {"name":self.config.name , "type":"weather_station"}
         return json.dumps(data)
 
     def insert_alert_status(self,data_holder):
-        if self.open == True:
-            data_holder["alert_status"] = "alert_not_present"
+        data_holder["alert_status"] = "alert_not_present"
 
     async def enter_deactivate_loop(self,websocket):
         while True:

@@ -1,16 +1,17 @@
 import dht11
 import asyncio
+from pigpio_dht import DHT11, DHT22
 
 class GpioHandler:
     def __init__(self,parent):
         self.parent = parent 
-        self.instance = dht11.DHT11(pin = 14)
 
     async def start_monitoring_weather(self ,interval):
+        sensor = DHT11(4)
         while True: 
-            data = self.instance.read()
-            c_to_f = (data.temperature * 9/5) + 32
-            self.parent.temp = c_to_f
-            self.parent.humidity =data.humidity
-            await asyncio.sleep(interval)
+
+            
+            print(sensor.read())
+            print("data")
+            await asyncio.sleep(10)
     
