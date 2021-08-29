@@ -44,10 +44,7 @@ class Main:
 
     async def monitor_weather(self, interval):
         handler = GpioHandler(self)
-  
-    
 
-        print("data")
         await handler.start_monitoring_weather(interval)
 
     async def establish_connection(self):

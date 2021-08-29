@@ -9,9 +9,10 @@ class GpioHandler:
     async def start_monitoring_weather(self ,interval):
         sensor = DHT11(4)
         while True: 
-
-            
-            print(sensor.read())
-            print("data")
-            await asyncio.sleep(10)
+            data = sensor.read()
+            if(data["valid"] == True):
+                self.parent.temp = data["temp_f"]
+                self.parent.humidity = data["humidity"]
+                print(data)
+            await asyncio.sleep(interval)
     
